@@ -677,41 +677,67 @@ while ($c = Fetch($countdata))
 
 asort($themes);
 
-foreach($themes as $themeKey => $themeData)
-{
+foreach($themes as $themeKey => $themeData) {
 	$themeName = $themeData['name'];
 	$themeAuthor = $themeData['author'];
 	$numUsers = $themeData['num'];
-
+	$csspreview = false;
 	$preview = "themes/".$themeKey."/preview.png";
-	if(!is_file($preview))
+	if(is_file("themes/".$themeKey."/preview.css")) {
+		$csspreview = true;
+		$preview = "themes/".$themeKey."/preview.css";
+	} elseif(!is_file($preview)) {
 		$preview = "img/nopreview.png";
+	}
 	$preview = resourceLink($preview);
-
-	$preview = "<img src=\"".$preview."\" alt=\"".$themeName."\" style=\"margin-bottom: 0.5em\">";
-
+	if ($csspreview) {
+		$preview = 
+		'<link rel="stylesheet" type="text/css" id="theme_preview" href="'.$preview.'">
+			<table class="outline margin previewbox p'.$themeKey.'">
+				<tr class="pheader1">
+					<th>'.$themeName.'</th>
+				</tr>
+				<tr class="pcell0">
+					<td>'.$themeAuthor.'</td>
+				</tr>
+				<tr class="pcell2">
+					<td>'.$numUsers.' users</td>
+				</tr>
+			</table>';
+	} else
+		$preview = "<img src=\"".$preview."\" alt=\"".$themeName."\" style=\"margin-bottom: 0.5em\">"; 
 	if($themeAuthor)
-		$byline = "<br>".nl2br($themeAuthor);
+		$byline = "<br/>".nl2br($themeAuthor);
 	else
 		$byline = "";
-
 	if($themeKey == $user['theme'])
 		$selected = " checked=\"checked\"";
 	else
 		$selected = "";
-
-	$themeList .= format(
-"
-	<div style=\"display: inline-block;\" class=\"theme\" title=\"{0}\">
+	if($csspreview) {
+		$themeList .= format(
+		"<div style=\"display: inline-block;\" class=\"theme\" title=\"{0}\">
 		<input style=\"display: none;\" type=\"radio\" name=\"theme\" value=\"{3}\"{4} id=\"{3}\" onchange=\"ChangeTheme(this.value);\" />
 		<label style=\"display: inline-block; clear: left; padding: 0.5em; {6} width: 260px; vertical-align: top\" onmousedown=\"void();\" for=\"{3}\">
-			{2}<br />
-			<strong>{0}</strong>
-			{1}<br />
-			{5}
+			{2}
 		</label>
 	</div>
-",	$themeName, $byline, $preview, $themeKey, $selected, Plural($numUsers, "user"), "");
+	",	$themeName, $byline, $preview, $themeKey, $selected, Plural($numUsers, "user"), "");
+	} else {
+		$themeList .= format(
+'
+	<div style="display: inline-block; padding: 15px 15px 15px 15px;" class="theme" title="{0}">
+		<label style="display: inline-block; clear: left; padding: 0.5em; {6} width: 260px; vertical-align: top" onmousedown="void();" for="{3}">
+			<table class="outline"><tr class="header1">
+			<th style="width: 1px; padding-top: 1px; padding-bottom: 1px"><div style="padding: 10px 10px 10px 10px;"><input type="radio" name="theme" value="{3}"{4} id="{3}" onchange="ChangeTheme(this.value);" /></div></th>
+			<th class="center"><strong>{0}</strong></th></tr>
+			<tr class="header0"><th colspan="2"><div style="padding: 5px 5px 5px 5px;">{2}</div></th></tr>
+			<tr><td>&nbsp;</td><td>{1}</td></tr>
+			<tr><td>&nbsp;</td><td>{5}</td></tr></table>
+		</label>
+	</div>
+',	$themeName, $byline, $preview, $themeKey, $selected, Plural($numUsers, "user"), "");
+	}
 }
 
 if(!isset($selectedTab))
