@@ -1,12 +1,22 @@
-/* New Kuribo theme, flat */
-
 body
 {
-	background: #333;
+	background-image: url('bg.png');
 	color: #fff;
+        font-family: Arial;
 }
 
-a:link, a:visited { color: #8fa; }
+/* hides the sidebar, header info box, and ugly header separator */
+#main-sidebar,#headerInfo,#header-sep {
+  display: none !important;
+}
+
+#theme_banner {
+  display: block !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+a:link, a:visited { color: rgba(81, 198, 0, 1); }
 a:active, a:hover { color: #fff; text-decoration: underline; }
 
 table.outline, table.post
@@ -29,7 +39,7 @@ table.outline > tbody > tr > *,
 table.post td.userlink,
 table.post td.meta
 {
-	border-bottom: 1px solid #043;
+	border-bottom: 1px solid rgba(103, 25, 0, 1);
 }
 
 table.outline > tbody:last-child > tr:last-child > *
@@ -40,7 +50,7 @@ table.outline > tbody:last-child > tr:last-child > *
 table.outline > tbody > tr > td,
 table.post td.side:not(.userlink)
 {
-	border-right: 1px solid #043;
+	border-right: 1px solid rgba(215, 44, 80, 1);
 	padding: 3px 5px;
 }
 
@@ -80,16 +90,16 @@ table.post td.meta
 	/* fallback for lame browsers that don't support gradients */
 	background: #043;
 	/* Firefox */
-	background: #105434 -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.35) 100%);
+	background: #FF0000 -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.35) 100%);
 	/* Webkit */
-	background: #105434 -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.35)));
-	background: #105434 -webkit-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.35) 100%);
+	background: #FF0000 -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.35)));
+	background: #FF0000 -webkit-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.35) 100%);
 	/* Opera */
-	background: #105434 -o-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.35) 100%);
+	background: #FF0000 -o-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.35) 100%);
 	/* IE10 and up */
-	background: #105434 -ms-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.35) 100%);
+	background: #FF0000 -ms-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.35) 100%);
 	/* standards compliant */
-	background: #105434 linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.35) 100%);
+	background: #FF0000 linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.35) 100%);
 	
 	padding: 4px 6px;
 	
@@ -100,15 +110,14 @@ td.cell1,
 tr.cell1 > td:not(.cell0):not(.cell2),
 table.post td.post
 {
-	background: #222;
+	background: rgba(30,0,0, 0.75);
 }
 
 td.cell0, td.cell2,
 tr.cell0 > td:not(.cell1), tr.cell2 > td:not(.cell1),
 table.post td.side:not(.userlink)
 {
-	background: #222624;/*#222c28;*/
-	/* 282828 */
+	background: rgba(30,0,0, 0.75);
 }
 
 
@@ -168,11 +177,11 @@ table#page-container > tbody > tr:last-child > td.crumb-container > table > tbod
 	height: 6px;
 }
 
+h4 { font-family: Georgia; }
 
 .navButton:hover, .dropdownContainer:hover > .navButton
 {
-	border: 1px solid #043;
-	/*background: #032;*/
+	border: 1px solid rgba(103, 25, 0, 1);
 	background: rgba(0,0,0,0.2);
 	padding: 4px;
 	border-radius: 4px;
@@ -181,7 +190,7 @@ table#page-container > tbody > tr:last-child > td.crumb-container > table > tbod
 ul.dropdownMenu
 {
 	border-radius: 6px;
-	border: 1px solid #043;
+	border: 1px solid rgba(103, 25, 0, 1);
 	text-shadow: none;
 }
 
@@ -190,7 +199,7 @@ ul.dropdownMenu li
 	border-top: none 0;
 	border-left: none 0;
 	border-right: none 0;
-	border-bottom: 1px solid #043;
+	border-bottom: 1px solid rgba(103, 25, 0, 1);
 	background: #222;
 }
 
@@ -210,7 +219,7 @@ ul.dropdownMenu li:last-child
 
 button, input[type="button"], input[type="submit"]
 {
-	border: 2px solid #043;
+	border: 2px solid rgba(103, 25, 0, 1);
 	border-radius: 5px;
 	background: #222c28;
 	color: #fff;
@@ -218,12 +227,12 @@ button, input[type="button"], input[type="submit"]
 
 button:hover, input[type="button"]:hover, input[type="submit"]:hover
 {
-	background: #043;
+	background: rgba(103, 25, 0, 1);
 }
 
 input[type="text"], input[type="password"], input[type="file"], input[type="email"], select, textarea
 {
-	border: 1px solid #043;
+	border: 1px solid rgba(103, 25, 0, 1);
 	border-radius: 5px;
 	background: black;
 	color: white;
@@ -237,9 +246,9 @@ div#tabs
 
 div#tabs button
 {
-	border-left: 2px solid #043;
-	border-top: 2px solid #043;
-	border-right: 2px solid #043;
+	border-left: 2px solid rgba(103, 25, 0, 1);
+	border-top: 2px solid rgba(103, 25, 0, 1);
+	border-right: 2px solid rgba(103, 25, 0, 1);
 	border-bottom: none 0;
 	border-radius: 5px 5px 0 0;
 	background: #222;
