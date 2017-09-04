@@ -48,7 +48,7 @@ if (!defined('BLARG')) die();
 		),
 		"defaultTheme" => array (
 			"type" => "theme",
-			"default" => "blargboard",
+			"default" => "fireboard_red",
 			"name" => "Default board theme",
 			'category' => 'Presentation'
 		),
