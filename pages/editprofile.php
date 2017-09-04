@@ -677,6 +677,11 @@ while ($c = Fetch($countdata))
 
 asort($themes);
 
+$themeList .= "
+	<div style=\"text-align: right;\">
+		<input type=\"text\" placeholder=\"".__("Search")."\" id=\"search\" onkeyup=\"searchThemes(this.value);\" />
+	</div>";
+
 foreach($themes as $themeKey => $themeData) {
 	$themeName = $themeData['name'];
 	$themeAuthor = $themeData['author'];
@@ -687,7 +692,7 @@ foreach($themes as $themeKey => $themeData) {
 		$csspreview = true;
 		$preview = "themes/".$themeKey."/preview.css";
 	} elseif(!is_file($preview)) {
-		$preview = "img/nopreview.png";
+		$preview = '';
 	}
 	$preview = resourceLink($preview);
 	if ($csspreview) {
@@ -704,10 +709,13 @@ foreach($themes as $themeKey => $themeData) {
 					<td>'.$numUsers.' users</td>
 				</tr>
 			</table>';
-	} else
-		$preview = "<img src=\"".$preview."\" alt=\"".$themeName."\" style=\"margin-bottom: 0.5em\">"; 
+	} elseif (is_file("themes/".$themeKey."/preview.png"))
+		$preview = "<tr class=\"header0\"><th colspan=\"2\" style=\"padding: 5px 5px 5px 5px;\"><img src=\"".$preview."\" alt=\"".$themeName."\" style=\"margin-bottom: 0.5em\"></th></tr>"; 
+	elseif (!is_file("themes/".$themeKey."/preview.png"))
+		$preview = ""; 
+
 	if($themeAuthor)
-		$byline = "<br/>".nl2br($themeAuthor);
+		$byline = nl2br($themeAuthor);
 	else
 		$byline = "";
 	if($themeKey == $user['theme'])
@@ -729,9 +737,8 @@ foreach($themes as $themeKey => $themeData) {
 	<div style="display: inline-block; padding: 15px 15px 15px 15px;" class="theme" title="{0}">
 		<label style="display: inline-block; clear: left; padding: 0.5em; {6} width: 260px; vertical-align: top" onmousedown="void();" for="{3}">
 			<table class="outline"><tr class="header1">
-			<th style="width: 1px; padding-top: 1px; padding-bottom: 1px"><div style="padding: 10px 10px 10px 10px;"><input type="radio" name="theme" value="{3}"{4} id="{3}" onchange="ChangeTheme(this.value);" /></div></th>
-			<th class="center"><strong>{0}</strong></th></tr>
-			<tr class="header0"><th colspan="2"><div style="padding: 5px 5px 5px 5px;">{2}</div></th></tr>
+			<th style="width: 1px; padding: 10px 10px 10px 10px;"><input type="radio" name="theme" value="{3}"{4} id="{3}" onchange="ChangeTheme(this.value);"></th>
+			<th class="center"><strong>{0}</strong></th></tr>{2}
 			<tr><td>&nbsp;</td><td>{1}</td></tr>
 			<tr><td>&nbsp;</td><td>{5}</td></tr></table>
 		</label>
