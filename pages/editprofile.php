@@ -1,18 +1,13 @@
 <?php
 if (!defined('BLARG')) die();
-
 //Check Stuff
 if(!$loguserid)
 	Kill(__("You must be logged in to edit your profile."));
-
 if (isset($_POST['action']) && $loguser['token'] != $_POST['key'])
 	Kill(__("No."));
-
 if(isset($_POST['editusermode']) && $_POST['editusermode'] != 0)
 	$_GET['id'] = $_POST['userid'];
-
 $editUserMode = false;
-
 if (HasPermission('admin.editusers'))
 {
 	$userid = (isset($_GET['id'])) ? (int)$_GET['id'] : $loguserid;
@@ -23,132 +18,89 @@ else
 	CheckPermission('user.editprofile');
 	$userid = $loguserid;
 }
-
 $user = Fetch(Query("select * from {users} where id={0}", $userid));
 $usergroup = $usergroups[$user['primarygroup']];
-
 $isroot = $usergroup['id'] == Settings::get('rootGroup');
 $isbanned = $usergroup['id'] == Settings::get('bannedGroup');
-
 if($editUserMode && $loguserid != $userid && $usergroup['rank'] > $loguserGroup['rank'])
 	Kill(__("You may not edit a user whose rank is above yours."));
-
 //Breadcrumbs
 $uname = $user['name'];
 if($user['displayname'])
 	$uname = $user['displayname'];
 	
 $title = __('Edit profile');
-
 makeCrumbs(array(actionLink("profile", $userid, "", $user['name']) => htmlspecialchars($uname), '' => __("Edit profile")));
-
 loadRanksets();
 $ranksets = $ranksetNames;
 $ranksets = array_reverse($ranksets);
 $ranksets[''] = __("None");
 $ranksets = array_reverse($ranksets);
-
 foreach($dateformats as $format)
 	$datelist[$format] = ($format ? $format.' ('.cdate($format).')':'');
 foreach($timeformats as $format)
 	$timelist[$format] = ($format ? $format.' ('.cdate($format).')':'');
-
 $sexes = array(__("Male"), __("Female"), __("N/A"));
-
 $groups = array();
 $r = Query("SELECT id,title FROM {usergroups} WHERE type=0 AND rank<={0} ORDER BY rank", $loguserGroup['rank']);
 while ($g = Fetch($r))
 	$groups[$g['id']] = htmlspecialchars($g['title']);
 	
-
 $pltype = Settings::get('postLayoutType');
 	
 $epPages = array();
 $epCategories = array();
 $epFields = array();
-
-
 // EDITPROFILE TAB -- GENERAL -------------------------------------------------
 AddPage('general', __('General'));
-
 AddCategory('general', 'appearance', __('Appearance'));
 	
 AddField('general', 'appearance', 'rankset', __('Rankset'), 'select', array('options'=>$ranksets));
-
 if ($editUserMode || (HasPermission('user.edittitle') && (HasPermission('user.havetitle') || $user['posts'] >= Settings::get('customTitleThreshold'))))
 	AddField('general', 'appearance', 'title', __('Title'), 'text', array('width'=>80, 'length'=>255));
-
-
 if ($editUserMode || HasPermission('user.editavatars'))
 {
 	AddCategory('general', 'avatar', __('Avatar'));
-
 	AddField('general', 'avatar', 'picture', __('Avatar'), 'displaypic', array('hint'=>__('Maximum size is 200x200 pixels.')));
 	AddField('general', 'avatar', 'minipic', __('Minipic'), 'minipic', array('hint'=>__('Maximum size is 16x16 pixels.')));
 }
-
-
 AddCategory('general', 'presentation', __('Presentation'));
-
 AddField('general', 'presentation', 'threadsperpage', __('Threads per page'), 'number', array('min'=>1, 'max'=>99));
 AddField('general', 'presentation', 'postsperpage', __('Posts per page'), 'number', array('min'=>1, 'max'=>99));
 AddField('general', 'presentation', 'dateformat', __('Date format'), 'datetime', array('presets'=>$datelist, 'presetname'=>'presetdate'));
 AddField('general', 'presentation', 'timeformat', __('Time format'), 'datetime', array('presets'=>$timelist, 'presetname'=>'presettime'));
 AddField('general', 'presentation', 'fontsize', __('Font scale'), 'number', array('min'=>20, 'max'=>200));
-
-
 AddCategory('general', 'options', __('Options'));
-
 $blockall = $pltype ? __('Hide post layouts') : __('Hide signatures');
 AddField('general', 'options', 'blocklayouts', $blockall, 'checkbox');
-
-
 // EDITPROFILE TAB -- PERSONAL ------------------------------------------------
 AddPage('personal', __('Personal'));
-
 AddCategory('personal', 'personal', __('Personal information'));
-
 AddField('personal', 'personal', 'sex', __('Gender'), 'radiogroup', array('options'=>$sexes));
 AddField('personal', 'personal', 'realname', __('Real name'), 'text', array('width'=>24, 'length'=>60));
 AddField('personal', 'personal', 'location', __('Location'), 'text', array('width'=>24, 'length'=>60));
 AddField('personal', 'personal', 'birthday', __('Birthday'), 'birthday');
-
 if ($editUserMode || HasPermission('user.editbio'))
 	AddField('personal', 'personal', 'bio', __('Bio'), 'textarea');
 	
 AddField('personal', 'personal', 'timezone', __('Timezone offset'), 'timezone');
-
-
 AddCategory('personal', 'contact', __('Contact information'));
-
 AddField('personal', 'contact', 'homepageurl', __('Homepage URL'), 'text', array('width'=>60, 'length'=>60));
 AddField('personal', 'contact', 'homepagename', __('Homepage name'), 'text', array('width'=>60, 'length'=>60));
-
-
 // EDITPROFILE TAB -- ACCOUNT -------------------------------------------------
 AddPage('account', __('Account settings'));
-
 AddCategory('account', 'confirm', __('Password confirmation'));
 AddField('account', 'confirm', 'info', '', 'label', array('value'=>__('Enter your password in order to edit account settings.')));
 AddField('account', 'confirm', 'currpassword', __('Password'), 'passwordonce');
-
-
 AddCategory('account', 'login', __('Login information'));
-
 if ($editUserMode)
 	AddField('account', 'login', 'name', __('User name'), 'text', array('width'=>24, 'length'=>20, 'callback' => 'HandleUsername'));
 else
 	AddField('account', 'login', 'name', __('User name'), 'label', array('value'=>htmlspecialchars($user['name'])));
-
 AddField('account', 'login', 'password', __('Password'), 'password', array('callback'=>'HandlePassword'));
-
-
 AddCategory('account', 'email', __('Email information'));
-
 AddField('account', 'email', 'email', __('Email address'), 'email', array('width'=>24, 'length'=>60));
 AddField('account', 'email', 'showemail', __('Make email address public'), 'checkbox');
-
-
 if ($editUserMode)
 {
 	AddCategory('account', 'admin', __('Administrative stuff'));
@@ -168,8 +120,6 @@ if ($editUserMode)
 	$aflags = array(0x1=>__('IP banned'), 0x2=>__('Errorbanned'));
 	AddField('account', 'admin', 'flags', __('Misc. settings'), 'bitmask', array('options'=>$aflags));
 }
-
-
 // EDITPROFILE TAB -- LAYOUT --------------------------------------------------
 if ($editUserMode || HasPermission('user.editpostlayout'))
 {
@@ -188,28 +138,17 @@ if ($editUserMode || HasPermission('user.editpostlayout'))
 	if ($pltype == 2) 
 		AddField('layout', 'postlayout', 'fulllayout', __('Apply layout to whole post box'), 'checkbox');
 }
-
-
 // EDITPROFILE TAB -- THEME ---------------------------------------------------
 AddPage('theme', __('Theme'));
-
 AddCategory('theme', 'theme', __('Theme'));
 AddField('theme', 'theme', 'theme', '', 'themeselector');
-
-
-
 //Allow plugins to add their own fields
 $bucket = "editprofile"; include(BOARD_ROOT."lib/pluginloader.php");
-
-
 $_POST['actionsave'] = (isset($_POST['actionsave']) ? $_POST['actionsave'] : '');
-
 /* QUERY PART
  * ----------
  */
-
 $failed = false;
-
 if($_POST['actionsave'])
 {
 	// catch spamvertisers early
@@ -232,7 +171,6 @@ if($_POST['actionsave'])
 	
 	
 	$passwordEntered = false;
-
 	if($_POST['currpassword'] != "")
 	{
 		$sha = doHash($_POST['currpassword'].SALT.$loguser['pss']);
@@ -243,11 +181,9 @@ if($_POST['actionsave'])
 			Alert(__("Invalid password"));
 			$failed = true;
 			$selectedTab = "account";
-
 			$epFields['account.confirm']['currpassword']['fail'] = true;
 		}
 	}
-
 	$query = "UPDATE {$dbpref}users SET ";
 	$sets = array();
 	$pluginSettings = unserialize($user['pluginsettings']);
@@ -272,7 +208,6 @@ if($_POST['actionsave'])
 					$item['fail'] = true;
 				}
 			}
-
 			switch($item['type'])
 			{
 				case "email":
@@ -332,7 +267,6 @@ if($_POST['actionsave'])
 					$val = ((int)$_POST[$field.'H'] * 3600) + ((int)$_POST[$field.'M'] * 60) * ((int)$_POST[$field.'H'] < 0 ? -1 : 1);
 					$sets[] = $field." = ".$val;
 					break;
-
 				case "displaypic":
 				case "minipic":
 					if($_POST['remove'.$field])
@@ -391,11 +325,9 @@ if($_POST['actionsave'])
 			$epFields[$catid][$field] = $item;
 		}
 	}
-
 	//Force theme names to be alphanumeric to avoid possible directory traversal exploits ~Dirbaio
 	if(preg_match("/^[a-zA-Z0-9_]+$/", $_POST['theme']))
 		$sets[] = "theme = '".SqlEscape($_POST['theme'])."'";
-
 	$sets[] = "pluginsettings = '".SqlEscape(serialize($pluginSettings))."'";
 	if ($editUserMode && ((int)$_POST['primarygroup'] != $user['primarygroup'] || $_POST['dopermaban'])) 
 	{
@@ -405,31 +337,25 @@ if($_POST['actionsave'])
 			
 		Report($user['name']."'s primary group was changed from ".$groups[$user['primarygroup']]." to ".$groups[(int)$_POST['primarygroup']]);
 	}
-
 	$query .= join($sets, ", ")." WHERE id = ".$userid;
 	if(!$failed)
 	{
 		RawQuery($query);
-
 		$his = "[b]".$user['name']."[/]'s";
 		if($loguserid == $userid)
 			$his = HisHer($user['sex']);
 		Report("[b]".$loguser['name']."[/] edited ".$his." profile. -> [g]#HERE#?uid=".$userid, 1);
-
 		die(header("Location: ".actionLink("profile", $userid, '', $_POST['name']?:$user['name'])));
 	}
 }
-
 //If failed, get values from $_POST
 //Else, get them from $user
-
 foreach ($epFields as $catid => $cfields)
 {
 	foreach ($cfields as $field => $item)
 	{
 		if ($item['type'] == "label" || $item['type'] == "password")
 			continue;
-
 		if(!$failed)
 		{
 			if(!isset($item['value']))
@@ -452,17 +378,12 @@ foreach ($epFields as $catid => $cfields)
 		$epFields[$catid][$field] = $item;
 	}
 }
-
-
 if($failed)
 	$loguser['theme'] = $_POST['theme'];
-
-
 function dummycallback($field, $item)
 {
 	return true;
 }
-
 function HandlePicture($field, $type, &$usepic)
 {
 	global $userid;
@@ -481,19 +402,15 @@ function HandlePicture($field, $type, &$usepic)
 		$maxSize = 100 * 1024;
 		$errorname = __('minipic');
 	}
-
 	$fileName = $_FILES[$field]['name'];
 	$fileSize = $_FILES[$field]['size'];
 	$tempFile = $_FILES[$field]['tmp_name'];
 	list($width, $height, $fileType) = getimagesize($tempFile);
-
 	if ($type == 0 && ($width > 300 || $height > 300))
 		return __("That avatar is definitely too big. The avatar field is meant for an avatar, not a wallpaper.");
-
 	$extension = strtolower(strrchr($fileName, "."));
 	if(!in_array($extension, $extensions))
 		return format(__("Invalid extension used for {0}. Allowed: {1}"), $errorname, join($extensions, ", "));
-
 	if($fileSize > $maxSize && !$allowOversize)
 		return format(__("File size for {0} is too high. The limit is {1} bytes, the uploaded image is {2} bytes."), $errorname, $maxSize, $fileSize)."</li>";
 	switch($fileType)
@@ -513,12 +430,10 @@ function HandlePicture($field, $type, &$usepic)
 	}
 	
 	$targetFile = false;
-
 	$oversize = ($width > $maxDim || $height > $maxDim);
 	if ($type == 0)
 	{
 		$targetFile = 'avatars/'.$userid.$ext;
-
 		if(!$oversize)
 		{
 			//Just copy it over.
@@ -544,7 +459,6 @@ function HandlePicture($field, $type, &$usepic)
 	elseif ($type == 1)
 	{
 		$targetFile = 'minipics/'.$userid.$ext;
-
 		if ($oversize)
 		{
 			//Don't allow minipics over $maxDim for anypony.
@@ -560,7 +474,6 @@ function HandlePicture($field, $type, &$usepic)
 	$usepic = '$root/'.$targetFile;
 	return true;
 }
-
 // Special field-specific callbacks
 function HandlePassword($field, $item)
 {
@@ -569,24 +482,19 @@ function HandlePassword($field, $item)
 	{
 		return __("To change your password, you must type it twice without error.");
 	}
-
 	if($_POST[$field] != "" && $_POST['repeat'.$field] == "")
 		$_POST[$field] = "";
-
 	if($_POST[$field])
 	{
 		$newsalt = Shake();
 		$sha = doHash($_POST[$field].SALT.$newsalt);
 		$_POST[$field] = $sha;
 		$sets[] = "pss = '".$newsalt."'";
-
 		//Now logout all the sessions that aren't this one, for security.
 		Query("DELETE FROM {sessions} WHERE id != {0} and user = {1}", doHash($_COOKIE['logsession'].SALT), $user['id']);
 	}
-
 	return false;
 }
-
 function HandleDisplayname($field, $item)
 {
 	global $user;
@@ -600,46 +508,36 @@ function HandleDisplayname($field, $item)
 		$dispCheck = FetchResult("select count(*) from {users} where id != {0} and (name = {1} or displayname = {1})", $user['id'], $_POST[$field]);
 		if($dispCheck)
 		{
-
 			return format(__("The display name you entered, \"{0}\", is already taken."), SqlEscape($_POST[$field]));
 		}
 		else if($_POST[$field] !== ($_POST[$field] = preg_replace('/(?! )[\pC\pZ]/u', '', $_POST[$field])))
 		{
-
 			return __("The display name you entered cannot contain control characters.");
 		}
 	}
 }
-
 function HandleUsername($field, $item)
 {
 	global $user;
 	if(IsReallyEmpty($_POST[$field]))
 		$_POST[$field] = $user[$field];
-
 	$dispCheck = FetchResult("select count(*) from {users} where id != {0} and (name = {1} or displayname = {1})", $user['id'], $_POST[$field]);
 	if($dispCheck)
 	{
-
 		return format(__("The login name you entered, \"{0}\", is already taken."), SqlEscape($_POST[$field]));
 	}
 	else if($_POST[$field] !== ($_POST[$field] = preg_replace('/(?! )[\pC\pZ]/u', '', $_POST[$field])))
 	{
-
 		return __("The login name you entered cannot contain control characters.");
 	}
 }
-
-
 /* EDITOR PART
  * -----------
  */
-
 //Dirbaio: Rewrote this so that it scans the themes dir.
 $dir = "themes/";
 $themeList = "";
 $themes = array();
-
 // Open a known directory, and proceed to read its contents
 if (is_dir($dir))
 {
@@ -650,12 +548,10 @@ if (is_dir($dir))
             if(filetype($dir . $file) != "dir") continue;
             if($file == ".." || $file == ".") continue;
             $infofile = $dir.$file."/themeinfo.txt";
-
             if(file_exists($infofile))
             {
 		        $themeinfo = file_get_contents($infofile);
 		        $themeinfo = explode("\n", $themeinfo, 2);
-
 		        $themes[$file]['name'] = trim($themeinfo[0]);
 		        $themes[$file]['author'] = trim($themeinfo[1]);
 		    }
@@ -670,13 +566,14 @@ if (is_dir($dir))
         closedir($dh);
     }
 }
-
 $countdata = Query("SELECT theme, COUNT(id) num FROM {users} GROUP BY theme");
 while ($c = Fetch($countdata))
 	$themes[$c['theme']]['num'] = $c['num'];
-
 asort($themes);
-
+$themeList .= "
+	<div style=\"text-align: right;\">
+		<input type=\"text\" placeholder=\"".__("Search")."\" id=\"search\" onkeyup=\"searchThemes(this.value);\" />
+	</div>";
 foreach($themes as $themeKey => $themeData) {
 	$themeName = $themeData['name'];
 	$themeAuthor = $themeData['author'];
@@ -687,7 +584,7 @@ foreach($themes as $themeKey => $themeData) {
 		$csspreview = true;
 		$preview = "themes/".$themeKey."/preview.css";
 	} elseif(!is_file($preview)) {
-		$preview = "img/nopreview.png";
+		$preview = '';
 	}
 	$preview = resourceLink($preview);
 	if ($csspreview) {
@@ -704,10 +601,12 @@ foreach($themes as $themeKey => $themeData) {
 					<td>'.$numUsers.' users</td>
 				</tr>
 			</table>';
-	} else
-		$preview = "<img src=\"".$preview."\" alt=\"".$themeName."\" style=\"margin-bottom: 0.5em\">"; 
+	} elseif (is_file("themes/".$themeKey."/preview.png"))
+		$preview = "<tr class=\"header0\"><th colspan=\"2\" style=\"padding: 5px 5px 5px 5px;\"><img src=\"".$preview."\" alt=\"".$themeName."\" style=\"margin-bottom: 0.5em\"></th></tr>"; 
+	elseif (!is_file("themes/".$themeKey."/preview.png"))
+		$preview = ""; 
 	if($themeAuthor)
-		$byline = "<br/>".nl2br($themeAuthor);
+		$byline = nl2br($themeAuthor);
 	else
 		$byline = "";
 	if($themeKey == $user['theme'])
@@ -729,9 +628,8 @@ foreach($themes as $themeKey => $themeData) {
 	<div style="display: inline-block; padding: 15px 15px 15px 15px;" class="theme" title="{0}">
 		<label style="display: inline-block; clear: left; padding: 0.5em; {6} width: 260px; vertical-align: top" onmousedown="void();" for="{3}">
 			<table class="outline"><tr class="header1">
-			<th style="width: 1px; padding-top: 1px; padding-bottom: 1px"><div style="padding: 10px 10px 10px 10px;"><input type="radio" name="theme" value="{3}"{4} id="{3}" onchange="ChangeTheme(this.value);" /></div></th>
-			<th class="center"><strong>{0}</strong></th></tr>
-			<tr class="header0"><th colspan="2"><div style="padding: 5px 5px 5px 5px;">{2}</div></th></tr>
+			<th style="width: 1px; padding: 10px 10px 10px 10px;"><input type="radio" name="theme" value="{3}"{4} id="{3}" onchange="ChangeTheme(this.value);"></th>
+			<th class="center"><strong>{0}</strong></th></tr>{2}
 			<tr><td>&nbsp;</td><td>{1}</td></tr>
 			<tr><td>&nbsp;</td><td>{5}</td></tr></table>
 		</label>
@@ -739,7 +637,6 @@ foreach($themes as $themeKey => $themeData) {
 ',	$themeName, $byline, $preview, $themeKey, $selected, Plural($numUsers, "user"), "");
 	}
 }
-
 if(!isset($selectedTab))
 {
 	$selectedTab = "general";
@@ -752,8 +649,6 @@ if(!isset($selectedTab))
 		}
 	}
 }
-
-
 foreach ($epFields as $catid => $cfields)
 {
 	foreach ($cfields as $field => $item)
@@ -762,7 +657,6 @@ foreach ($epFields as $catid => $cfields)
 		
 		if(isset($item['fail'])) 
 			$item['caption'] = "<span style=\"color:#f44;\">{$item['caption']}</span>";
-
 		switch($item['type'])
 		{
 			case "label":
@@ -876,34 +770,26 @@ foreach ($epFields as $catid => $cfields)
 		$epFields[$catid][$field] = $item;
 	}
 }
-
-
 echo "
 	<form action=\"".htmlentities(actionLink("editprofile"))."\" method=\"post\" enctype=\"multipart/form-data\">
 ";
-
 RenderTemplate('form_editprofile', array(
 	'pages' => $epPages, 
 	'categories' => $epCategories, 
 	'fields' => $epFields,
 	'selectedTab' => $selectedTab,
 	'btnEditProfile' => "<input type=\"submit\" id=\"submit\" name=\"actionsave\" value=\"".__("Save")."\">"));
-
 echo "
 		<input type=\"hidden\" name=\"editusermode\" value=\"1\">
 		<input type=\"hidden\" name=\"userid\" value=\"{$userid}\">
 		<input type=\"hidden\" name=\"key\" value=\"{$loguser['token']}\">
 	</form>
 ";
-
-
 function IsReallyEmpty($subject)
 {
 	$trimmed = trim(preg_replace("/&.*;/", "", $subject));
 	return strlen($trimmed) == 0;
 }
-
-
 function AddPage($page, $name)
 {
 	global $epPages, $epCategories;
@@ -911,7 +797,6 @@ function AddPage($page, $name)
 	$epPages[$page] = $name;
 	$epCategories[$page] = array();
 }
-
 function AddCategory($page, $cat, $name)
 {
 	global $epCategories, $epFields;
@@ -919,7 +804,6 @@ function AddCategory($page, $cat, $name)
 	$epCategories[$page][$page.'.'.$cat] = $name;
 	$epFields[$page.'.'.$cat] = array();
 }
-
 function AddField($page, $cat, $id, $label, $type, $misc=null)
 {
 	global $epFields;
@@ -934,7 +818,6 @@ function AddField($page, $cat, $id, $label, $type, $misc=null)
 	
 	$epFields[$page.'.'.$cat][$id] = $field;
 }
-
 ?>
 <script type="text/javascript">
 var homepagename = "<?php echo addslashes($epFields['personal.contact']['homepagename']['value']); ?>";
@@ -944,7 +827,6 @@ setTimeout(function()
 	$('#homepagename').val(homepagename);
 	$('#currpassword').keyup();
 }, 200);
-
 $('#currpassword').keyup(function()
 {
 	var fields = $('#account').find('input:not(#currpassword),select');
