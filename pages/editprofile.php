@@ -677,6 +677,11 @@ while ($c = Fetch($countdata))
 
 asort($themes);
 
+$themeList .= "
+	<div style=\"text-align: right;\">
+		<input type=\"text\" placeholder=\"".__("Search")."\" id=\"search\" onkeyup=\"searchThemes(this.value);\" />
+	</div>";
+
 foreach($themes as $themeKey => $themeData) {
 	$themeName = $themeData['name'];
 	$themeAuthor = $themeData['author'];
