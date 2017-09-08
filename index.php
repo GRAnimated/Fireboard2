@@ -138,8 +138,6 @@ $layout_logopic = resourceLink($layout_logopic);
 $favicon = resourceLink('img/favicon.ico');
 
 $themefile = "themes/$theme/style.css";
-if(!file_exists(__DIR__.'/'.$themefile))
-	$themefile = "themes/$theme/style.php";
 	
 
 $layout_credits = 
