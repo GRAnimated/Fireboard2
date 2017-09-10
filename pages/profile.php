@@ -25,7 +25,7 @@ if($id == $loguserid)
 	DismissNotification('profilecomment', $loguserid, $loguserid);
 }
 
-$canDeleteComments = ($id == $loguserid && HasPermission('user.deleteownusercomments')) || HasPermission('admin.adminusercomments');
+$canDeleteComments = (HasPermission('admin.adminusercomments');
 $canComment = (HasPermission('user.postusercomments') && $user['primarygroup'] != Settings::get('bannedGroup')) || HasPermission('admin.adminusercomments');
 
 if($loguserid && $_REQUEST['token'] == $loguser['token'])
@@ -197,7 +197,7 @@ else
 	$temp[__("Last post")] = __("Never");
 
 $temp[__("Last view")] = format("{0} ({1} ago)", formatdate($user['lastactivity']), TimeUnits(time() - $user['lastactivity']));
-$temp[__("Last page visited")] = "<a href=\"".FilterURL($user['lasturl'])."\">".FilterURL($user['lasturl'])."</a>";
+//$temp[__("Last page visited")] = "<a href=\"".FilterURL($user['lasturl'])."\">".FilterURL($user['lasturl'])."</a>";
 //$temp[__("Score")] = $score;
 
 if(HasPermission('admin.viewips'))

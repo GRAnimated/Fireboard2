@@ -30,7 +30,6 @@
 				</span>
 			</td>
 		</tr>
-		{if $forum.subforums}{makeSubForumListing($forum.id)}{/if}
-		{/foreach}
 	</table>
 	{/foreach}
+{/foreach}

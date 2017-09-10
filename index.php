@@ -138,8 +138,6 @@ $layout_logopic = resourceLink($layout_logopic);
 $favicon = resourceLink('img/favicon.ico');
 
 $themefile = "themes/$theme/style.css";
-if(!file_exists(__DIR__.'/'.$themefile))
-	$themefile = "themes/$theme/style.php";
 	
 
 $layout_credits = 
@@ -155,7 +153,7 @@ $titles = array
 		'Blargboard 1.3.5, best forum software ever',
 	        'Even Wikipedia rates us 10/10',
 	        'Made by Firecharge64, forked from StapleButter',
-	        'Welcome to '.$boardname.',
+	       "Welcome to '.$boardname.",
 	);
 	$title = $titles[rand(0,count($titles)-1)];
 
@@ -215,7 +213,7 @@ $perfdata = 'Page rendered in '.sprintf('%.03f',microtime(true)-$starttime).' se
 		'layout_birthdays' => $layout_birthdays,
 		'layout_credits' => $layout_credits,
 		'mobileswitch' => $mobileswitch,
-		'maintenance', => $maintenance,
+		'maintenance' => $maintenance,
 		'perfdata' => $perfdata)); 
 ?>
 </body>
