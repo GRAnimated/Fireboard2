@@ -261,74 +261,12 @@ if(NumRows($badgersR))
 
 $bucket = "profileTable"; include(BOARD_ROOT."lib/pluginloader.php");
 
-// Want profile comments? Uncomment below!
-/*
-$cpp = 15;
-$total = FetchResult("SELECT
-						count(*)
-					FROM {usercomments}
-					WHERE uid={0}", $id);
 
-$from = (int)$_GET["from"];
-if(!isset($_GET["from"]))
-	$from = 0;
-$realFrom = $total-$from-$cpp;
-$realLen = $cpp;
-if($realFrom < 0)
-{
-	$realLen += $realFrom;
-	$realFrom = 0;
-}
-$rComments = Query("SELECT
-		u.(_userfields),
-		uc.id, uc.cid, uc.text, uc.date
-		FROM {usercomments} uc
-		LEFT JOIN {users} u ON u.id = uc.cid
-		WHERE uc.uid={0}
-		ORDER BY uc.date ASC LIMIT {1u},{2u}", $id, $realFrom, $realLen);
-
-$pagelinks = PageLinksInverted(actionLink("profile", $id, "from=", $user['name']), $cpp, $from, $total);
-
-$comments = array();
-while($comment = Fetch($rComments))
-{
-	$cmt = array();
-	
-	$deleteLink = '';
-	if($canDeleteComments || ($comment['cid'] == $loguserid && HasPermission('user.deleteownusercomments')))
-		$deleteLink = "<small style=\"float: right; margin: 0px 4px;\">".
-			actionLinkTag("&#x2718;", "profile", $id, "action=delete&cid=".$comment['id']."&token={$loguser['token']}")."</small>";
-			
-	$cmt['deleteLink'] = $deleteLink;
-	
-	$cmt['userlink'] = UserLink(getDataPrefix($comment, 'u_'));
-	$cmt['formattedDate'] = relativedate($comment['date']);
-	$cmt['text'] = CleanUpPost($comment['text']);
-	
-	$comments[] = $cmt;
-}
-
-$commentField = __("You are not allowed to post usercomments.");
-if($canComment)
-{
-	$commentField = "
-		<form name=\"commentform\" method=\"post\" action=\"".htmlentities(actionLink("profile"))."\">
-			<input type=\"hidden\" name=\"id\" value=\"$id\">
-			<input type=\"text\" name=\"text\" style=\"width: 80%;\" maxlength=\"255\">
-			<input type=\"submit\" name=\"actionpost\" value=\"".__("Post")."\">
-			<input type=\"hidden\" name=\"token\" value=\"{$loguser['token']}\">
-		</form>";
-}
-
-*/
 
 RenderTemplate('profile', array(
 	'username' => htmlspecialchars($uname), 
 	'userlink' => UserLink($user),
 	'profileParts' => $profileParts,
-	// If you want comments, uncomment below too.
-	//'comments' => $comments,
-	//'commentField' => $commentField,
 	'pagelinks' => $pagelinks));	
 
 	
@@ -360,6 +298,8 @@ if (HasPermission('admin.banusers') && $loguserid != $id)
 if (HasPermission('admin.lamernuke') && $loguserid != $id)
       $links[] = actionLinkTag('Nuke User', 'lamernuke', $id);
 
+if($mobileLayout)
+	$links[] = actionLinkTag(__("Comments"), "usercomments", $id, "", "comments"));
 if(HasPermission('user.editprofile') && $loguserid == $id)
 	$links[] = actionLinkTag(__("Edit my profile"), "editprofile");
 else if(HasPermission('admin.editusers'))
