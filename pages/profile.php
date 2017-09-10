@@ -25,6 +25,20 @@ if($id == $loguserid)
 	DismissNotification('profilecomment', $loguserid, $loguserid);
 }
 
+
+if(!$mobileLayout)
+{
+	write("
+				</td>
+				<td style=\"vertical-align: top; border: 0px none;\">
+	");
+	include("usercomments.php");
+	print "
+				</td>
+			</tr>
+		</table>";
+}
+
 $canDeleteComments = (HasPermission('admin.adminusercomments');
 $canComment = (HasPermission('user.postusercomments') && $user['primarygroup'] != Settings::get('bannedGroup')) || HasPermission('admin.adminusercomments');
 
