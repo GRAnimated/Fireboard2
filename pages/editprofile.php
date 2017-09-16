@@ -570,18 +570,12 @@ $countdata = Query("SELECT theme, COUNT(id) num FROM {users} GROUP BY theme");
 while ($c = Fetch($countdata))
 	$themes[$c['theme']]['num'] = $c['num'];
 asort($themes);
-<<<<<<< HEAD
-=======
 
->>>>>>> 5d1b02e08c58e5cc0e0ad8062b85d9a6a84d1886
 $themeList .= "
 	<div style=\"text-align: right;\">
 		<input type=\"text\" placeholder=\"".__("Search")."\" id=\"search\" onkeyup=\"searchThemes(this.value);\" />
 	</div>";
-<<<<<<< HEAD
-=======
 
->>>>>>> 5d1b02e08c58e5cc0e0ad8062b85d9a6a84d1886
 foreach($themes as $themeKey => $themeData) {
 	$themeName = $themeData['name'];
 	$themeAuthor = $themeData['author'];
@@ -613,10 +607,7 @@ foreach($themes as $themeKey => $themeData) {
 		$preview = "<tr class=\"header0\"><th colspan=\"2\" style=\"padding: 5px 5px 5px 5px;\"><img src=\"".$preview."\" alt=\"".$themeName."\" style=\"margin-bottom: 0.5em\"></th></tr>"; 
 	elseif (!is_file("themes/".$themeKey."/preview.png"))
 		$preview = ""; 
-<<<<<<< HEAD
-=======
 
->>>>>>> 5d1b02e08c58e5cc0e0ad8062b85d9a6a84d1886
 	if($themeAuthor)
 		$byline = nl2br($themeAuthor);
 	else

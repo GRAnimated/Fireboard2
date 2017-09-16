@@ -24,7 +24,7 @@ if($loguserid && $_REQUEST['token'] == $loguser['token'])
 				if ($lastcmt < $user['lastprofileview'])
 					DismissNotification('profilecomment', $id, $id);
 			}
-			die(header("Location: ".actionLink("profile", $id, '', $user['name'])));
+			die(header("Location: ".actionLink("usercomments", $id, '', $user['name'])));
 		}
 	}
 
@@ -35,7 +35,7 @@ if($loguserid && $_REQUEST['token'] == $loguser['token'])
 		{
 			SendNotification('profilecomment', $id, $id);
 		}
-		die(header("Location: ".actionLink("profile", $id, '', $user['name'])));
+		die(header("Location: ".actionLink("usercomments", $id, '', $user['name'])));
 	}
 }
 
@@ -67,7 +67,7 @@ $rComments = Query("SELECT
 		WHERE uc.uid={0}
 		ORDER BY uc.date ASC LIMIT {1u},{2u}", $id, $realFrom, $realLen);
 
-$pagelinks = PageLinksInverted(actionLink("profile", $id, "from=", $user['name']), $cpp, $from, $total);
+$pagelinks = PageLinksInverted(actionLink("usercomments", $id, "from=", $user['name']), $cpp, $from, $total);
 
 $comments = array();
 while($comment = Fetch($rComments))
@@ -92,7 +92,7 @@ $commentField = __("You are not allowed to post usercomments.");
 if($canComment)
 {
 	$commentField = "
-		<form name=\"commentform\" method=\"post\" action=\"".htmlentities(actionLink("profile"))."\">
+		<form name=\"commentform\" method=\"post\" action=\"".htmlentities(actionLink("usercomments"))."\">
 			<input type=\"hidden\" name=\"id\" value=\"$id\">
 			<input type=\"text\" name=\"text\" style=\"width: 80%;\" maxlength=\"255\">
 			<input type=\"submit\" name=\"actionpost\" value=\"".__("Post")."\">
