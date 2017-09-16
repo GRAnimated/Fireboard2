@@ -33,7 +33,12 @@ if (!defined('BLARG')) die();
 			'category' => 'Board identity'
 		),
 		
-		
+		"urlrewrit" => array (
+		   "type" => "boolean",
+		   "default" => "0", // disabled URL rewritting
+		   "name" => "URL rewriting",
+		   'category' => 'Presentation',
+		),
 		"dateformat" => array (
 			"type" => "text",
 			"default" => "m-d-y, h:i a",

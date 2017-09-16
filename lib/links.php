@@ -25,7 +25,8 @@ function actionLink($action, $id="", $args="", $urlname="")
 	//$bucket = "linkMangler"; include(__DIR__."/pluginloader.php");
 	
 	// rewritten links
-	/*if ($action == MAIN_PAGE) $action = '';
+	if(Settings::get('urlrewrit')) {
+	if ($action == MAIN_PAGE) $action = '';
 	else $action .= '/';
 	
 	if ($id)
@@ -36,7 +37,8 @@ function actionLink($action, $id="", $args="", $urlname="")
 	else $id = '';
 	
 	return $boardroot.$action.$id.($args ? '?'.$args : '');*/
-
+    }
+	else {
 	// non-rewritten links
 	$res = "";
 
@@ -52,6 +54,7 @@ function actionLink($action, $id="", $args="", $urlname="")
 		return $boardroot;
 	else
 		return $boardroot."?".substr($res, 1);
+	}
 }
 
 
