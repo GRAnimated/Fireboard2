@@ -182,6 +182,7 @@ $perfdata = 'Page rendered in '.sprintf('%.03f',microtime(true)-$starttime).' se
 
 	<script type="text/javascript" src="<?php print resourceLink("js/jquery.js");?>"></script>
 	<script type="text/javascript" src="<?php print resourceLink("js/tricks.js");?>"></script>
+		<script type="text/javascript" src="<?php print resourceLink("js/tools.js");?>"></script>
 	<script type="text/javascript" src="<?php print resourceLink("js/jquery.tablednd_0_5.js");?>"></script>
 	<script type="text/javascript" src="<?php print resourceLink("js/jquery.scrollTo-1.4.2-min.js");?>"></script>
 	<script type="text/javascript" src="<?php print resourceLink("js/jscolor/jscolor.js");?>"></script>
