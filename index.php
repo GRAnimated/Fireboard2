@@ -153,7 +153,6 @@ $titles = array
 		'Blargboard 1.3.5, best forum software ever',
 	        'Even Wikipedia rates us 10/10',
 	        'Made by Firecharge64, forked from StapleButter',
-	       "Welcome to '.$boardname.",
 	);
 	$title = $titles[rand(0,count($titles)-1)];
 
