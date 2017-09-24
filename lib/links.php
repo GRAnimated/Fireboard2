@@ -36,7 +36,7 @@ function actionLink($action, $id="", $args="", $urlname="")
 	}
 	else $id = '';
 	
-	return $boardroot.$action.$id.($args ? '?'.$args : '');*/
+	return $boardroot.$action.$id.($args ? '?'.$args : '');
     }
 	else {
 	// non-rewritten links
