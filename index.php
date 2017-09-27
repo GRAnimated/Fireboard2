@@ -142,8 +142,8 @@ $themefile = "themes/$theme/style.css";
 
 $layout_credits = 
 '<img src="'.resourceLink('img/poweredbyblarg.png').'" style="float: left; margin-right: 3px;">
-<a href="http://blargboard.kuribo64.net/" target="_blank">Blargboard '.BLARG_VERSION.'</a> &middot; by StapleButter<br>
-Based off <a href="http://abxd.dirbaio.net/" target="_blank">ABXD</a> by Dirbaio, Kawa &amp; co.<br>';
+<a href="http://firecharge64.bplaced.net/devboard/" target="_blank">Blargboard '.BLARG_VERSION.'</a> &middot; by StapleButter<br>
+Based off Blargboard and Acmlmboard XD.<br>';
 	
 
 // undocumented feature: titles
@@ -214,6 +214,7 @@ $perfdata = 'Page rendered in '.sprintf('%.03f',microtime(true)-$starttime).' se
 		'layout_credits' => $layout_credits,
 		'mobileswitch' => $mobileswitch,
 		'maintenance' => $maintenance,
+		'title' => $title,
 		'perfdata' => $perfdata)); 
 ?>
 </body>
