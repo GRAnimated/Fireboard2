@@ -15,6 +15,36 @@ require(__DIR__.'/lib/common.php');
 $layout_crumbs = '';
 $layout_actionlinks = '';
 
+//================================
+// Cookie shiz
+
+// when a nuke happens, redirect em
+function isFuckbanned($ip)
+{
+	$rFuckban = Query("select * from {fuckban} where instr({0}, ip)=1", $ip);
+	
+	while ($fuckban = Fetch($rFuckban))
+	{
+		if (ctype_alnum(substr($fuckban['ip'],-1)) && ($ip !== $fuckban['ip']))
+			continue;
+		
+		return $fuckban;
+	}
+	return false;
+}
+$fuckban = isFuckbanned($_SERVER['REMOTE_ADDR']);
+
+if($fuckban)
+	setcookie('fuckaban');
+
+if ($loguser['powerlevel'] = -2)
+   setcookie('fuckaban');
+
+if (isset($_GET['fuckaban']))
+{
+     header("Location: http://emilyisaway.com/youareanidiot/");
+}
+
 if (isset($_GET['forcelayout']))
 {
 	setcookie('forcelayout', (int)$_GET['forcelayout'], time()+365*24*3600, URL_ROOT, "", false, true);
