@@ -172,7 +172,7 @@ $themefile = "themes/$theme/style.css";
 
 $layout_credits = 
 '<img src="'.resourceLink('img/poweredbyblarg.png').'" style="float: left; margin-right: 3px;">
-<a href="http://firecharge64.bplaced.net/devboard/" target="_blank">Blargboard '.BLARG_VERSION.'</a> &middot; by StapleButter<br>
+<a href="http://firecharge64.bplaced.net/devboard/" target="_blank">Blargboard '.BLARG_VERSION.'</a> &middot; by Firecharge64 and maorninja<br>
 Based off Blargboard and Acmlmboard XD.<br>';
 	
 
