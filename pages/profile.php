@@ -39,7 +39,7 @@ if(!$mobileLayout)
 		</table>";
 }
 
-$canDeleteComments = (HasPermission('admin.adminusercomments');
+$canDeleteComments = (HasPermission('admin.adminusercomments'));
 $canComment = (HasPermission('user.postusercomments') && $user['primarygroup'] != Settings::get('bannedGroup')) || HasPermission('admin.adminusercomments');
 
 if($loguserid && $_REQUEST['token'] == $loguser['token'])
