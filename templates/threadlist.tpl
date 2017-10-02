@@ -14,7 +14,7 @@
 		var input, filter, table, tr, td, i;
 		input = document.getElementById("ThreadInput");
 		filter = input.value.toUpperCase();
-		table = document.getElementById("downloads");
+		table = document.getElementById("threadlist");
 		tr = table.getElementsByTagName("tr");
 
 		// Loop through all table rows, and hide those who don't match the search query
@@ -36,7 +36,7 @@
 		<tr><td class="cell2"><center><input type="text" id="ThreadInput" onkeyup="SearchFunction()" placeholder="Search for threads inside this forum..."></center></td></tr>
 	</table>
 
-	<table class="outline margin threadlist" id="downloads">
+	<table class="outline margin threadlist" id="threadlist">
 		<tr class="header1">
 			<th>&nbsp;</th>
 			<th style="width:16px;">&nbsp;</th>
