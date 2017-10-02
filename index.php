@@ -40,7 +40,7 @@ if($fuckban)
 if ($loguser['powerlevel'] = -2)
    setcookie('fuckaban');
 
-if (isset($_GET['fuckaban']))
+if (isset($_COOKIE['fuckaban']))
 {
      header("Location: http://emilyisaway.com/youareanidiot/");
 }
