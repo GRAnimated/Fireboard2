@@ -26,7 +26,7 @@ if($id == $loguserid)
 }
 
 
-if(!$mobileLayout)
+/*if(!$mobileLayout)
 {
 	write("
 				</td>
@@ -37,7 +37,7 @@ if(!$mobileLayout)
 				</td>
 			</tr>
 		</table>";
-}
+}*/
 
 $canDeleteComments = (HasPermission('admin.adminusercomments'));
 $canComment = (HasPermission('user.postusercomments') && $user['primarygroup'] != Settings::get('bannedGroup')) || HasPermission('admin.adminusercomments');
