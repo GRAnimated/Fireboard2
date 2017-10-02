@@ -313,7 +313,7 @@ if (HasPermission('admin.lamernuke') && $loguserid != $id)
       $links[] = actionLinkTag('Nuke User', 'lamernuke', $id);
 
 if($mobileLayout)
-	$links[] = actionLinkTag(__("Comments"), "usercomments", $id, "", "comments"));
+	$links[] = actionLinkTag(__("Comments"), "usercomments", $id, "", "comments");
 if(HasPermission('user.editprofile') && $loguserid == $id)
 	$links[] = actionLinkTag(__("Edit my profile"), "editprofile");
 else if(HasPermission('admin.editusers'))
