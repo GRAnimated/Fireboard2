@@ -1,16 +1,25 @@
 <?php
 //  AcmlmBoard XD - Posts by user viewer
 //  Access: all
-AssertForbidden("listPosts");
+
 if(!isset($_GET['id']))
 	Kill(__("User ID unspecified."));
+
 $id = (int)$_GET['id'];
+
 $rUser = Query("select * from {users} where id={0}", $id);
 if(NumRows($rUser))
 	$user = Fetch($rUser);
 else
 	Kill(__("Unknown user ID."));
+
 $title = __("+1 list");
+
+$minpower = $loguser['powerlevel'];
+if($minpower < 0)
+	$minpower = 0;
+
+
 $total = FetchResult("
 			SELECT
 				count(p.id)
@@ -18,14 +27,18 @@ $total = FetchResult("
 				{posts} p
 				LEFT JOIN {threads} t ON t.id=p.thread
 				LEFT JOIN {forums} f ON f.id=t.forum
-			WHERE p.user={0} AND ".forumAccessControlSql()." AND p.postplusones > 0",
-		$id);
+			WHERE p.user={0} AND f.minpower <= {1} AND p.postplusones > 0",
+		$id, $minpower);
+
 $ppp = $loguser['postsperpage'];
 if(isset($_GET['from']))
 	$from = (int)$_GET['from'];
 else
 	$from = 0;
+
 if(!$ppp) $ppp = 25;
+
+
 $rPosts = Query("	SELECT
 				p.*,
 				pt.text, pt.revision, pt.user AS revuser, pt.date AS revdate,
@@ -43,27 +56,30 @@ $rPosts = Query("	SELECT
 				LEFT JOIN {threads} t ON t.id=p.thread
 				LEFT JOIN {forums} f ON f.id=t.forum
 				LEFT JOIN {categories} c ON c.id=f.catid
-			WHERE u.id={1} AND ".forumAccessControlSql()." AND p.postplusones > 0
-			ORDER BY postplusones DESC, date ASC LIMIT {2u}, {3u}", $loguserid, $id, $from, $ppp);
+			WHERE u.id={1} AND f.minpower <= {2} AND p.postplusones > 0
+			ORDER BY postplusones DESC, date ASC LIMIT {3u}, {4u}", $loguserid, $id, $minpower, $from, $ppp);
+
 $numonpage = NumRows($rPosts);
+
 $uname = $user["name"];
 if($user["displayname"])
 	$uname = $user["displayname"];
-$crumbs = new PipeMenu();
-$crumbs->add(new PipeMenuLinkEntry(__("Member list"), "memberlist"));
-$crumbs->add(new PipeMenuHtmlEntry(userLink($user)));
-$crumbs->add(new PipeMenuTextEntry(__("+1'd posts")));
-makeBreadcrumbs($crumbs);
+
 if($total == 0)
 	Kill(__("This user has no +1'd posts"));
+
 $pagelinks = PageLinks(actionLink("listplusones", $id, "from="), $ppp, $from, $total);
+
 if($pagelinks)
 	write("<div class=\"smallFonts pages\">".__("Pages:")." {0}</div>", $pagelinks);
+
 if(NumRows($rPosts))
 {
 	while($post = Fetch($rPosts))
 		MakePost($post, POST_NORMAL, array('threadlink'=>1, 'tid'=>$post['thread'], 'fid'=>$post['fid'], 'noreplylinks'=>1));
 }
+
 if($pagelinks)
 	write("<div class=\"smallFonts pages\">".__("Pages:")." {0}</div>", $pagelinks);
+
 ?>
