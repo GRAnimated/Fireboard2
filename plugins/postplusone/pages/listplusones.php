@@ -15,7 +15,7 @@ else
 
 $title = __("+1 list");
 
-$minpower = $loguser['powerlevel'];
+$minpower = $loguser['primarygroup'];
 if($minpower < 0)
 	$minpower = 0;
 
@@ -27,8 +27,8 @@ $total = FetchResult("
 				{posts} p
 				LEFT JOIN {threads} t ON t.id=p.thread
 				LEFT JOIN {forums} f ON f.id=t.forum
-			WHERE p.user={0} AND f.minpower <= {1} AND p.postplusones > 0",
-		$id, $minpower);
+			WHERE p.user={0} AND t.forum IN ({1c}) AND p.postplusones > 0",
+		$id, ForumsWithPermission('forum.viewforum'));
 
 $ppp = $loguser['postsperpage'];
 if(isset($_GET['from']))
@@ -42,7 +42,7 @@ if(!$ppp) $ppp = 25;
 $rPosts = Query("	SELECT
 				p.*,
 				pt.text, pt.revision, pt.user AS revuser, pt.date AS revdate,
-				u.(_userfields), u.(rankset,title,picture,posts,postheader,signature,signsep,lastposttime,lastactivity,regdate,globalblock),
+				u.(_userfields), u.(rankset,title,picture,posts,postheader,signature,signsep,lastposttime,lastactivity,regdate,globalblock,fulllayout),
 				ru.(_userfields),
 				du.(_userfields),
 				t.id thread, t.title threadname,
@@ -56,8 +56,8 @@ $rPosts = Query("	SELECT
 				LEFT JOIN {threads} t ON t.id=p.thread
 				LEFT JOIN {forums} f ON f.id=t.forum
 				LEFT JOIN {categories} c ON c.id=f.catid
-			WHERE u.id={1} AND f.minpower <= {2} AND p.postplusones > 0
-			ORDER BY postplusones DESC, date ASC LIMIT {3u}, {4u}", $loguserid, $id, $minpower, $from, $ppp);
+			WHERE u.id={1} AND f.id IN ({4c}) AND p.postplusones > 0
+			ORDER BY postplusones DESC, date ASC LIMIT {3u}, {4u}", $loguserid, $id, $from, $ppp, ForumsWithPermission('forum.viewforum'));
 
 $numonpage = NumRows($rPosts);
 
