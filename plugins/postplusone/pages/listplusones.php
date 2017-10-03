@@ -2,10 +2,13 @@
 //  AcmlmBoard XD - Posts by user viewer
 //  Access: all
 
-if(!isset($_GET['id']))
+if (!defined('BLARG')) die();
+
+if(!$id)
 	Kill(__("User ID unspecified."));
 
-$id = (int)$_GET['id'];
+$id = (int)$_GET["id"];
+
 
 $rUser = Query("select * from {users} where id={0}", $id);
 if(NumRows($rUser))
