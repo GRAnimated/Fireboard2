@@ -73,6 +73,7 @@ AddField('general', 'presentation', 'fontsize', __('Font scale'), 'number', arra
 AddCategory('general', 'options', __('Options'));
 $blockall = $pltype ? __('Hide post layouts') : __('Hide signatures');
 AddField('general', 'options', 'blocklayouts', $blockall, 'checkbox');
+AddField('general', 'options', 'hideonline', __('Hide from "Online Users" list'), 'checkbox');
 // EDITPROFILE TAB -- PERSONAL ------------------------------------------------
 AddPage('personal', __('Personal'));
 AddCategory('personal', 'personal', __('Personal information'));
