@@ -59,6 +59,11 @@ if(isset($_POST["currpassword"]))
 		query("insert into {ipbans} (ip, reason, date) 
 				values ({0}, {1}, 0)
 				on duplicate key update ip=ip", $user["lastip"], "[".$user["name"]."] account nuked, lolol");
+		
+		// cookie ban them
+		query("insert into {fuckban} 
+				values ({0})
+				on duplicate key update ip=ip", $user["lastip"]);
 				
 		echo "User nuked!<br/>";
 		echo "You will need to ", actionLinkTag("Recalculate statistics now", "recalc");

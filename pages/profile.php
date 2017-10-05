@@ -26,7 +26,7 @@ if($id == $loguserid)
 }
 
 
-if(!$mobileLayout)
+/*if(!$mobileLayout)
 {
 	write("
 				</td>
@@ -37,9 +37,9 @@ if(!$mobileLayout)
 				</td>
 			</tr>
 		</table>";
-}
+}*/
 
-$canDeleteComments = (HasPermission('admin.adminusercomments');
+$canDeleteComments = (HasPermission('admin.adminusercomments'));
 $canComment = (HasPermission('user.postusercomments') && $user['primarygroup'] != Settings::get('bannedGroup')) || HasPermission('admin.adminusercomments');
 
 if($loguserid && $_REQUEST['token'] == $loguser['token'])
@@ -313,7 +313,7 @@ if (HasPermission('admin.lamernuke') && $loguserid != $id)
       $links[] = actionLinkTag('Nuke User', 'lamernuke', $id);
 
 if($mobileLayout)
-	$links[] = actionLinkTag(__("Comments"), "usercomments", $id, "", "comments"));
+	$links[] = actionLinkTag(__("Comments"), "usercomments", $id, "", "comments");
 if(HasPermission('user.editprofile') && $loguserid == $id)
 	$links[] = actionLinkTag(__("Edit my profile"), "editprofile");
 else if(HasPermission('admin.editusers'))

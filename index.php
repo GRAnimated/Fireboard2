@@ -15,6 +15,36 @@ require(__DIR__.'/lib/common.php');
 $layout_crumbs = '';
 $layout_actionlinks = '';
 
+//================================
+// Cookie shiz
+
+// when a nuke happens, redirect em
+function isFuckbanned($ip)
+{
+	$rFuckban = Query("select * from {fuckban} where instr({0}, ip)=1", $ip);
+	
+	while ($fuckban = Fetch($rFuckban))
+	{
+		if (ctype_alnum(substr($fuckban['ip'],-1)) && ($ip !== $fuckban['ip']))
+			continue;
+		
+		return $fuckban;
+	}
+	return false;
+}
+$fuckban = isFuckbanned($_SERVER['REMOTE_ADDR']);
+
+if($fuckban)
+	setcookie('fuckaban');
+
+if ($loguser['powerlevel'] = -2)
+   setcookie('fuckaban');
+
+if (isset($_COOKIE['fuckaban']))
+{
+     header("Location: http://emilyisaway.com/youareanidiot/");
+}
+
 if (isset($_GET['forcelayout']))
 {
 	setcookie('forcelayout', (int)$_GET['forcelayout'], time()+365*24*3600, URL_ROOT, "", false, true);
@@ -142,8 +172,8 @@ $themefile = "themes/$theme/style.css";
 
 $layout_credits = 
 '<img src="'.resourceLink('img/poweredbyblarg.png').'" style="float: left; margin-right: 3px;">
-<a href="http://blargboard.kuribo64.net/" target="_blank">Blargboard '.BLARG_VERSION.'</a> &middot; by StapleButter<br>
-Based off <a href="http://abxd.dirbaio.net/" target="_blank">ABXD</a> by Dirbaio, Kawa &amp; co.<br>';
+<a href="http://firecharge64.bplaced.net/devboard/" target="_blank">Blargboard '.BLARG_VERSION.'</a> &middot; by Firecharge64 and maorninja<br>
+Based off Blargboard and Acmlmboard XD.<br>';
 	
 
 // undocumented feature: titles
@@ -153,7 +183,6 @@ $titles = array
 		'Blargboard 1.3.5, best forum software ever',
 	        'Even Wikipedia rates us 10/10',
 	        'Made by Firecharge64, forked from StapleButter',
-	       "Welcome to '.$boardname.",
 	);
 	$title = $titles[rand(0,count($titles)-1)];
 
@@ -215,6 +244,7 @@ $perfdata = 'Page rendered in '.sprintf('%.03f',microtime(true)-$starttime).' se
 		'layout_credits' => $layout_credits,
 		'mobileswitch' => $mobileswitch,
 		'maintenance' => $maintenance,
+		'title' => $title,
 		'perfdata' => $perfdata)); 
 ?>
 </body>

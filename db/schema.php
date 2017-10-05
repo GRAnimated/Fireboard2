@@ -103,6 +103,15 @@ $tables = array
 		),
 		"special" => $keyID.", key `catid` (`catid`), key `l` (`l`), key `r` (`r`)"
 	),
+	// needed totally
+	"fuckban" => array
+	(
+		"fields" => array
+		(
+			"ip" => "varchar(45)".$notNull,
+		),
+		"special" => "unique key `ip` (`ip`), key `date` (`date`)"
+	),
 	"guests" => array
 	(
 		"fields" => array
