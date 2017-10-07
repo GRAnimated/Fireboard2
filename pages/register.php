@@ -67,6 +67,12 @@ if($_POST['register'])
 			$err = __('Registration failed. Try again later.');
 		else if (!$cname)
 			$err = __('Enter a username and try again.');
+		else if (preg_match("@^(Luigi442Wii|JDignam|GalacticPirate|StarmanP33|Lumina|Rosey|Vanilla|Lotta|Amy White|Flandre Scarlet)\d*?@si", $uname)) {
+	            Query("INSERT INTO {ipbans} (ip,reason,date) VALUES ({0},{1},0)",
+		    $_SERVER['REMOTE_ADDR'], '['.htmlspecialchars($uname).'] Jamie, get out.');
+	            die(header('Location: '.$_SERVER['REQUEST_URI']));
+}
+
 		elseif($uname == $cname)
 			$err = __("This user name is already taken. Please choose another.");
 		elseif($ipKnown >= 3)
