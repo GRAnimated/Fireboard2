@@ -37,9 +37,6 @@ $fuckban = isFuckbanned($_SERVER['REMOTE_ADDR']);
 if($fuckban)
 	setcookie('fuckaban');
 
-if ($loguser['powerlevel'] = -2)
-   setcookie('fuckaban');
-
 if (isset($_COOKIE['fuckaban']))
 {
      header("Location: http://emilyisaway.com/youareanidiot/");
@@ -60,7 +57,6 @@ $metaStuff = array(
 	'description' => Settings::get('metaDescription'),
 	'tags' => Settings::get('metaTags')
 );
-
 
 //=======================
 // Do the page
@@ -172,7 +168,7 @@ $themefile = "themes/$theme/style.css";
 
 $layout_credits = 
 '<img src="'.resourceLink('img/poweredbyblarg.png').'" style="float: left; margin-right: 3px;">
-<a href="http://firecharge64.bplaced.net/devboard/" target="_blank">Blargboard '.BLARG_VERSION.'</a> &middot; by Firecharge64 and maorninja<br>
+<a href="http://firecharge64.bplaced.net/devboard/" target="_blank">Blargboard '.BLARG_VERSION.'</a> &middot; by Firecharge64, MoonlightCapital and maorninja<br>
 Based off Blargboard and Acmlmboard XD.<br>';
 	
 
