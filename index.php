@@ -188,7 +188,6 @@ $titles = array
 
 $layout_contents = "<div id=\"page_contents\">$layout_contents</div>";
 
-if(Settings::get('enablepora'))
 //=======================
 // Print everything!
 
@@ -225,31 +224,34 @@ $perfdata = 'Page rendered in '.sprintf('%.03f',microtime(true)-$starttime).' se
 <?php 
 	if (Settings::get('maintenance'))
 		$maintenance = 'Maintenance mode is enabled.';
+	
+  if(Settings::get('enablepora')) {
+    $porastuff = [
+            'poratitle' => CleanUpPost(Settings::get('PoRATitle'), "", true),
+            'poratext' => CleanUpPost(Settings::get('PoRAText'), "", true),
+            ];
+        }
 
-	RenderTemplate('pagelayout', array(
-		'layout_contents' => $layout_contents,
-		'layout_crumbs' => $layout_crumbs,
-		'layout_actionlinks' => $layout_actionlinks,
-		'headerlinks' => $headerlinks,
-		'sidelinks' => $sidelinks,
-		'layout_userpanel' => $layout_userpanel,
-		'notifications' => $notifications,
-		'boardname' => Settings::get('boardname'),
-		if(Settings::get('enablepora')) 
-		{
-			'poratitle' => CleanUpPost(Settings::get('PoRATitle'), "", true),
-		    'poratext' => CleanUpPost(Settings::get('PoRAText'), "", true),
-		}
-		'layout_logopic' => $layout_logopic,
-		'layout_time' => $layout_time,
-		'layout_views' => $layout_views,
-		'layout_onlineusers' => $layout_onlineusers,
-		'layout_birthdays' => $layout_birthdays,
-		'layout_credits' => $layout_credits,
-		'mobileswitch' => $mobileswitch,
-		'maintenance' => $maintenance,
-		'title' => $title,
-		'perfdata' => $perfdata)); 
+    RenderTemplate('pagelayout', array(
+        'layout_contents' => $layout_contents,
+        'layout_crumbs' => $layout_crumbs,
+        'layout_actionlinks' => $layout_actionlinks,
+        'headerlinks' => $headerlinks,
+        'sidelinks' => $sidelinks,
+        'layout_userpanel' => $layout_userpanel,
+        'notifications' => $notifications,
+        'boardname' => Settings::get('boardname'),
+        $porastuff,
+        'layout_logopic' => $layout_logopic,
+        'layout_time' => $layout_time,
+        'layout_views' => $layout_views,
+        'layout_onlineusers' => $layout_onlineusers,
+        'layout_birthdays' => $layout_birthdays,
+        'layout_credits' => $layout_credits,
+        'mobileswitch' => $mobileswitch,
+        'maintenance' => $maintenance,
+        'title' => $title,
+        'perfdata' => $perfdata)); 
 ?>
 </body>
 </html>

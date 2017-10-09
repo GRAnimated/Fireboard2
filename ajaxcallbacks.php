@@ -79,7 +79,7 @@ else if($action == "tf")	//Theme File
 	if(!file_exists($themeFile))
 		$themeFile = "themes/$theme/style.php";
 
-
+}
 function checkForImage(&$image, $external, $file)
 {
 	if($image) return;

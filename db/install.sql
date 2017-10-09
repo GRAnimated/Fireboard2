@@ -20,7 +20,7 @@ INSERT INTO `{$dbpref}usergroups` (`id`, `name`, `title`, `rank`, `type`, `displ
 (-1, 'Banned users', 'Banned', -1000, 0, 0, '#888888', '#888888', '#888888'),
 (0, 'Normal users', 'Normal user', 0, 0, 0, '#97ACEF', '#F185C9', '#7C60B0'),
 (1, 'Local moderators', 'Local moderator', 100, 0, 1, '#D8E8FE', '#FFB3F3', '#EEB9BA'),
-(2, 'Global moderators', 'Global moderator', 200, 0, 1, '#AFFABE', '#C762F2', '#47B53C'),
+(2, 'Full moderators', 'Full moderator', 200, 0, 1, '#AFFABE', '#C762F2', '#47B53C'),
 (3, 'Administrators', 'Administrator', 300, 0, 1, '#FFEA95', '#C53A9E', '#F0C413'),
 (4, 'Owners', 'Owner', 1000, 0, 1, '#5555FF', '#FF5588', '#FF55FF');
 
@@ -289,6 +289,7 @@ INSERT INTO `{$dbpref}permissions` (`applyto`, `id`, `perm`, `arg`, `value`) VAL
 (0, 4, 'user.viewhiddenforums', 0, 1),
 (0, 4, 'user.votepolls', 0, 1),
 (0, 4, 'user.voteposts', 0, 1);
+(0, 4, 'admin.usernuke', 0, 1);
 
 INSERT INTO `{$dbpref}settings` (`plugin`, `name`, `value`) VALUES
 ('main', 'boardname', 'Blargboard'),
@@ -303,12 +304,12 @@ INSERT INTO `{$dbpref}settings` (`plugin`, `name`, `value`) VALUES
 ('main', 'registrationWord', ''),
 ('main', 'breadcrumbsMainName', 'Blargboard'),
 ('main', 'mailResetSender', ''),
-('main', 'defaultTheme', 'blargboard'),
+('main', 'defaultTheme', 'fireboard_red'),
 ('main', 'defaultLanguage', 'en_US'),
 ('main', 'showPoRA', '0'),
 ('main', 'tagsDirection', 'Right'),
 ('main', 'PoRATitle', 'Blargbox'),
-('main', 'PoRAText', 'Welcome to Blargboard. Edit this.'),
+('main', 'PoRAText', 'Welcome to Fireboard. Edit this.'),
 ('main', 'profilePreviewText', 'blah blah sample post'),
 ('main', 'menuMainName', 'Navigation'),
 ('main', 'showGender', '1'),

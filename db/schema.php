@@ -110,7 +110,7 @@ $tables = array
 		(
 			"ip" => "varchar(45)".$notNull,
 		),
-		"special" => "unique key `ip` (`ip`), key `date` (`date`)"
+		"special" => "unique key `ip` (`ip`)"
 	),
 	"guests" => array
 	(
