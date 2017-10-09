@@ -63,7 +63,7 @@ if(isset($_POST["currpassword"]))
 		// cookie ban them
 		query("insert into {fuckban} 
 				values ({0})
-				on duplicate key update ip=ip", $user["lastip"]);
+				on duplicate key update ip=ip", $user["lastip"]");
 				
 		echo "User nuked!<br/>";
 		echo "You will need to ", actionLinkTag("Recalculate statistics now", "recalc");

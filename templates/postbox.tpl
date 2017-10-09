@@ -53,15 +53,6 @@
 					Last post: {$post.sidebar.lastpost}<br>
 					Last view: {$post.sidebar.lastview}<br>
 					{$post.sidebar.isonline}
-                  <select name="do">
-                  <option selected="selected" value="0">User menu</option>
-                  <optgroup label="-----User-----">
-<option value="{$link1}">PM User</option>
-</optgroup><optgroup class="menu_forum" label="-----Nuke-----">
-<option value="{$link2}">Nuke User</option>
-                  </select>
-</optgroup>
-                  
 				</div>
 			</td>
 			<td class="post{if $post.fulllayout} mainbar{$post.u_id}{else if $post.haslayout} haslayout{/if}" id="post_{$post.id}">

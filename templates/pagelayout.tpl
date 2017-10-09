@@ -10,7 +10,6 @@
                 <td>
 					<a href="{actionLink page='board'}"><img id="theme_banner" title="{$title}" src="{$layout_logopic}" alt="{$boardname}" title="{$boardname}"></a>
                 </td>
-				{if $poratext}
 				<td>
 					<table class="outline" id="headerInfo">
 						<tr class="header1"><th>{$poratitle}</th></tr>
@@ -25,7 +24,6 @@
                 </tr>
                 </table>
             </td>
-			{/if}
         </tr>
 			 <tr class="header1">
             <th id="navBar">

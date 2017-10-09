@@ -340,10 +340,6 @@ function makePost($post, $type, $params=array())
 	if($poster['lastactivity'] > time() - 300)
 		$sidebar['isonline'] = __("User is <strong>online</strong>");
 	
-	if($loguserid) {
-		$link1 = htmlspecialchars(actionLink('sendprivate', 'uid='.$poster['id']));
-		$link2 = htmlspecialchars(actionLink('lamernuke', 'id='.$poster['id']));
-	}
 	$sidebarExtra = array();
 	$bucket = "sidebar"; include(__DIR__."/pluginloader.php");
 	$sidebar['extra'] = $sidebarExtra;
@@ -376,7 +372,6 @@ function makePost($post, $type, $params=array())
 
 	//PRINT THE POST!
 	
-
 	RenderTemplate('postbox', array('post' => $post));
 }
 

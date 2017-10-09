@@ -10,6 +10,12 @@ body
   display: none !important;
 }
 
+#theme_banner {
+  display: block !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
 a:link, a:visited { color: rgba(81, 198, 0, 1); }
 a:active, a:hover { color: #fff; text-decoration: underline; }
 

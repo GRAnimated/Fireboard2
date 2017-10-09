@@ -76,13 +76,13 @@ makeForumListing($fid);
 
 
 $total = $forum['numthreads'];
-
+$tpp = $loguser['threadsperpage'];
 if(isset($_GET['from']))
 	$from = (int)$_GET['from'];
 else
 	$from = 0;
 
-
+if(!$tpp) $tpp = 50;
 
 $rThreads = Query("	SELECT
 						t.*,
@@ -95,9 +95,9 @@ $rThreads = Query("	SELECT
 						LEFT JOIN {users} su ON su.id=t.user
 						LEFT JOIN {users} lu ON lu.id=t.lastposter
 					WHERE forum={0}
-					ORDER BY sticky DESC, lastpostdate DESC LIMIT {1u}, {2u}", $fid, $from, $loguserid);
+					ORDER BY sticky DESC, lastpostdate DESC LIMIT {1u}, {2u}", $fid, $from, $tpp, $loguserid);
 
-$pagelinks = PageLinks(actionLink("forum", $fid, "from=", $urlname), $from, $total);
+$pagelinks = PageLinks(actionLink("forum", $fid, "from=", $urlname), $tpp, $from, $total);
 	
 $ppp = $loguser['postsperpage'];
 if(!$ppp) $ppp = 20;

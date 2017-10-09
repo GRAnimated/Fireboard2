@@ -77,7 +77,8 @@ Updating from Blargboard 1.0 isn't covered.
  * Flexible permission system
  * Plugin system
  * Templates (in the works, about 80% done)
- * URL rewriting, enables human-readable forum and thread URLs for public content (bit broken, can be enabled using Settings)
+ * URL rewriting, enables human-readable forum and thread URLs for public content (requires code editing to enable it as of now, and
+ is broken for pages such as IP Search)
  * Post layouts
  * more Acmlmboard feel
  * typical messageboard features
@@ -127,7 +128,7 @@ How to (insert action): first look into your board's admin panel, settings panel
 ## Support, troubleshooting, etc
 
 If the error is a 'MySQL Error', to get a detailed report, you need to open config/database.php in a text editor, find `$debugMode = 0;` and replace it with `$debugMode = 1;`. 
-This will make the board give you the MySQL error message and the query which went wrong. Once you're done troubleshooting your board, it is compulsory that you edit config/database.php back so that `$debugMode` is 0, or errors will be all over the place.
+This will make the board give you the MySQL error message and the query which went wrong. Once you're done troubleshooting your board, it is recommended that you edit config/database.php back so that `$debugMode` is 0.
 
 YOU WILL NOT RECEIVE HELP IF YOU HAVEN'T READ THE INSTRUCTIONS WHEN INSTALLING YOUR BOARD.
 
@@ -173,9 +174,9 @@ YOU WILL NOT RECEIVE HELP IF YOU HAVEN'T READ THE INSTRUCTIONS WHEN INSTALLING Y
 <li>Adding a PM limit so you can only send a PM every 45 seconds</li>
 <li>An account can only be registered after 1 minute of another account being registered (optional, choose if you want it or not)</li><li>Registration word key, lock the site down like Cucco.de unless you're signed in. You would also need the key to register</li></ul>
 16) Finish the Blargboard todo list at Github
-17) Allow BBCode in the PoRA (DONE)
+17) Allow BBCode in the PoRA
 18) Allow/disable PoRA setting, like on ABXD
-21) New layout (DONE)
+21) New layout
 
 Optional stuff:
 1) Port the Acmlmboard RPG system

@@ -479,7 +479,6 @@ $tables = array
 		"fields" => array
 		(
 			"id" => $AI,
-			"hideonline" => $var256,
 			"name" => "varchar(32)".$utf8ci.$notNull,
 			"displayname" => "varchar(32)".$utf8ci.$notNull,
 			"password" => $var256,
