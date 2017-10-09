@@ -111,7 +111,10 @@ if($loguser)
 	$loguserid = $loguser["id"];
 	
 	$sessid = doHash($_COOKIE['logsession'].SALT);
-	Query("UPDATE {sessions} SET lasttime={0} WHERE id={1}", time(), $sessid);
+	if($user['hideonline'])
+	{
+	     Query("UPDATE {sessions} SET lasttime={0} WHERE id={1}", time(), $sessid);
+	}
 	Query("DELETE FROM {sessions} WHERE user={0} AND lasttime<={1}", $loguserid, time()-2592000);
 }
 else

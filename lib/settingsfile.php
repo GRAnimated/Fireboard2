@@ -176,6 +176,12 @@ Well, what more could you [url=http://en.wikipedia.org]want to know[/url]? Perha
 		),
 		
 		
+		"enablepora" => array (
+		   "type" => "boolean",
+		   "default" => "0",
+		   "name" => "Enable PoRA",
+		   'category' => 'Presentation',
+		),
 		'PoRATitle' => array(
 			'type' => 'text',
 			'default' => 'Dorpbox',

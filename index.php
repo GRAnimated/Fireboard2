@@ -188,6 +188,7 @@ $titles = array
 
 $layout_contents = "<div id=\"page_contents\">$layout_contents</div>";
 
+if(Settings::get('enablepora'))
 //=======================
 // Print everything!
 
@@ -234,8 +235,11 @@ $perfdata = 'Page rendered in '.sprintf('%.03f',microtime(true)-$starttime).' se
 		'layout_userpanel' => $layout_userpanel,
 		'notifications' => $notifications,
 		'boardname' => Settings::get('boardname'),
-		'poratitle' => CleanUpPost(Settings::get('PoRATitle'), "", true),
-		'poratext' => CleanUpPost(Settings::get('PoRAText'), "", true),
+		if(Settings::get('enablepora')) 
+		{
+			'poratitle' => CleanUpPost(Settings::get('PoRATitle'), "", true),
+		    'poratext' => CleanUpPost(Settings::get('PoRAText'), "", true),
+		}
 		'layout_logopic' => $layout_logopic,
 		'layout_time' => $layout_time,
 		'layout_views' => $layout_views,
