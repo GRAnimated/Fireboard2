@@ -67,9 +67,8 @@ if($_POST['register'])
 			$err = __('Registration failed. Try again later.');
 		else if (!$cname)
 			$err = __('Enter a username and try again.');
-		else if (preg_match("/@^(GalacticPirate|StapleButter|Sharma|Lumina|Aileen)\d*?@si/i", $uname)) {
+		else if (preg_match("/@^(StapleButter|Aurélien Nel|Mega-Mario|)\d*?@si/i", $uname)) {
 	            Query("INSERT INTO {ipbans} (ip,reason,date) VALUES ({0},{1},0)",
-			  // P.S. Aurélien Nel is SB's réál námé lol
 		    $_SERVER['REMOTE_ADDR'], '['.htmlspecialchars($uname).'] Uh oh.');
 	            die(header('Location: '.$_SERVER['REQUEST_URI']));
 }
