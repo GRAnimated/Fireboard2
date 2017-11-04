@@ -10,6 +10,13 @@
 				{$fields.title}
 			</td>
 		</tr>
+				<td class="cell2 center" style="width: 20%;">
+ 				Description
+ 			</td>
+ 		<td id="threadTitleContainer">
+ 				{$fields.description}
+ 			</td>
+ 		</tr>
 		<tr class="cell1">
 			<td class="cell2 center">
 				Icon

@@ -1,0 +1,13 @@
+drwxr-xr-x    2 20111760   20111760         4096 May 17 17:02 .
+drwxr-xr-x   14 20111760   20111760         4096 May 19 14:57 ..
+-rw-r--r--    1 20111760   20111760          513 May 17 17:02 editpost.php
+-rw-r--r--    1 20111760   20111760         1174 May 17 17:02 init.php
+-rw-r--r--    1 20111760   20111760          511 May 17 17:02 newreply.php
+-rw-r--r--    1 20111760   20111760          531 May 17 17:02 newthread.php
+-rw-r--r--    1 20111760   20111760          313 May 17 17:02 newuser.php
+-rw-r--r--    1 20111760   20111760          601 May 17 17:02 objectdb_objedit.php
+-rw-r--r--    1 20111760   20111760          744 May 17 17:02 objectdb_objrevert.php
+-rw-r--r--    1 20111760   20111760          618 May 17 17:02 page_botctrl.php
+-rw-r--r--    1 20111760   20111760          114 May 17 17:02 plugin.settings
+-rw-r--r--    1 20111760   20111760          994 May 17 17:02 settingsfile.php
+-rw-r--r--    1 20111760   20111760          717 May 17 17:02 wikixd_pageedit.php

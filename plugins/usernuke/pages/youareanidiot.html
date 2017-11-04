@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+<title>You Are An Idiot</title>
+<style>
+	html, body {
+		height:100%;
+		width:100%;
+		margin:0px;
+		padding:0px;
+		overflow:hidden;
+		background: black;
+	}
+
+	div.content {
+		margin:0px;
+		padding:0px;
+		height:100%;
+		width:100%;
+		background-image: url("http://emilyisaway.com/youareanidiot/css/idiotw.png");
+		background-repeat: no-repeat;
+		background-position: center center;
+	}
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+</head>
+<body id="bod">
+<audio loop autoplay>
+	<source src="http://emilyisaway.com/youareanidiot/audio.wav">
+</audio>
+<div class="content" id="content"></div>
+
+<script>
+
+window.onload = function() {
+	var cont = document.getElementById("content");   
+	var body = document.getElementById("bod");
+	var id = setInterval(frame, 1000);
+	var black = true;
+
+	function frame() {
+		black = !black;
+
+		if(black) {
+			cont.style.backgroundImage = "url('http://emilyisaway.com/youareanidiot/css/idiotw.png')";
+			body.style.background = "black";
+		} else {
+			cont.style.backgroundImage = "url('http://emilyisaway.com/youareanidiot/css/idiotb.png')";
+			body.style.background = "white";
+		}
+	}
+}
+</script>
+
+</body>

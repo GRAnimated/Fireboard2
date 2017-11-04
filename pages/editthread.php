@@ -157,6 +157,7 @@ elseif($_POST['actionedit'])
 		if ($canRename)
 		{
 			$thread['title'] = $_POST['title'];
+			$thread['description'] = $_POST['description'];
 			
 			if($_POST['iconid'])
 			{
@@ -170,7 +171,7 @@ elseif($_POST['actionedit'])
 		else
 			$iconurl = $thread['icon'];
 
-		$rThreads = Query("update {threads} set title={0}, icon={1}, closed={2}, sticky={3} where id={4} limit 1", 
+		$rThreads = Query("update {threads} set title={0}, icon={1}, closed={2}, sticky={3}, description={4} where id={5} limit 1", 
 			$thread['title'], $iconurl, $isClosed, $isSticky, $tid);
 
 		Report("[b]".$loguser['name']."[/] edited thread [b]".$thread['title']."[/] -> [g]#HERE#?tid=".$tid, $isHidden);
@@ -237,6 +238,7 @@ if ($canRename)
 					<input type=\"text\" name=\"iconurl\" size=60 maxlength=\"100\" value=\"".htmlspecialchars($iconurl)."\">";
 					
 	$fields['title'] = "<input type=\"text\" id=\"tit\" name=\"title\" size=80 maxlength=\"60\" value=\"".htmlspecialchars($thread['title'])."\">";
+	$fields['description'] = "<input type=\"text\" id=\"des\" name=\"description\" size=80 maxlength=\"50\" value=\"".htmlspecialchars($thread['description'])."\">";
 	$fields['icon'] = $iconSettings;
 }
 

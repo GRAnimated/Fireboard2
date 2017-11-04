@@ -2,13 +2,10 @@
 //  AcmlmBoard XD - Posts by user viewer
 //  Access: all
 
-if (!defined('BLARG')) die();
-
-if(!$id)
+if(!isset($pageParams['id']))
 	Kill(__("User ID unspecified."));
 
-$id = (int)$_GET["id"];
-
+$id = (int)$pageParams['id'];
 
 $rUser = Query("select * from {users} where id={0}", $id);
 if(NumRows($rUser))
@@ -22,6 +19,9 @@ $minpower = $loguser['primarygroup'];
 if($minpower < 0)
 	$minpower = 0;
 
+/*error_reporting(E_ALL);
+ini_set("display_errors", "on");
+ini_set("display_startup_errors", "on");*/
 
 $total = FetchResult("
 			SELECT
@@ -76,8 +76,7 @@ $pagelinks = PageLinks(actionLink("listplusones", $id, "from="), $ppp, $from, $t
 if($pagelinks)
 	write("<div class=\"smallFonts pages\">".__("Pages:")." {0}</div>", $pagelinks);
 
-if(NumRows($rPosts))
-{
+if($numonpage > 0) {
 	while($post = Fetch($rPosts))
 		MakePost($post, POST_NORMAL, array('threadlink'=>1, 'tid'=>$post['thread'], 'fid'=>$post['fid'], 'noreplylinks'=>1));
 }

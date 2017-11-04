@@ -14,7 +14,9 @@ $bbcodeCallbacks = array
 
 	"[user" => "bbcodeUser",
 	"[thread" => "bbcodeThread",
+	"[threads" => "bbcodeThreadNoTags",
 	"[forum" => "bbcodeForum",
+	"[wiki" => "bbcodeWiki",
 
 	"[quote" => "bbcodeQuote",
 	"[reply" => "bbcodeReply",
@@ -121,6 +123,24 @@ function bbcodeThread($contents, $arg, $parenttag)
 	return $threadLinkCache[$id];
 }
 
+function bbcodeThreadNoTags($contents, $arg, $parenttag)
+ {
+ 	global $threadLinkCache, $loguser;
+ 	$id = (int)$arg;
+ 	if(!isset($threadLinkCache[$id]))
+ 	{
+ 		$rThread = Query("select t.id, t.title, t.forum from {threads} t where t.id={0} AND t.forum IN ({1c})", $id, ForumsWithPermission('forum.viewforum'));
+ 		if(NumRows($rThread))
+ 		{
+ 			$thread = Fetch($rThread);
+ 			$threadLinkCache[$id] = makeThreadLinkNoTags($thread);
+ 		}
+ 		else
+ 			$threadLinkCache[$id] = "&lt;invalid thread ID&gt;";
+ 	}
+ 	return $threadLinkCache[$id];
+}
+ 
 function bbcodeForum($contents, $arg, $parenttag)
 {
 	global $forumLinkCache, $loguser;
@@ -254,4 +274,10 @@ function bbcodeYoutube($contents, $arg, $parenttag)
 		return "[Invalid youtube video ID]";
 
 	return '[youtube]'.$contents.'[/youtube]';
+}
+
+function bbcodeWiki($contents, $arg, $parenttag) {
+	$correctlink = $arg;
+	str_ireplace(' ', '_', $arg);
+	return '<a href=\"'.htmlentities(actionLink("wiki", $arg)).'"\>'.$correctlink.'</a>';
 }

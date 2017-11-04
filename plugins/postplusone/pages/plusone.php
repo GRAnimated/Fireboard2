@@ -20,12 +20,9 @@ if(!$thread)
 
 if (!HasPermission('forum.viewforum', $thread['forum']))
 	die('Nice try hacker kid, but no.');
-if($thread["closed"])
-	die(__("Thread is closed"));
 
 $vote = Fetch(Query("SELECT * FROM {postplusones} WHERE post = {0} AND user = {1}", $pid, $loguserid));
-if(!$vote)
-{
+if(!$vote) {
 	Query("UPDATE {posts} SET postplusones = postplusones+1 WHERE id = {0} LIMIT 1", $pid);
 	Query("UPDATE {users} SET postplusones = postplusones+1 WHERE id = {0} LIMIT 1", $post["user"]);
 	Query("UPDATE {users} SET postplusonesgiven = postplusonesgiven+1 WHERE id = {0} LIMIT 1", $loguserid);

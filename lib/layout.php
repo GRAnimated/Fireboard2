@@ -378,6 +378,7 @@ function makeThreadListing($threads, $pagelinks, $dostickies = true, $showforum 
 		
 		$ispublic = HasPermission('forum.viewforum', $thread['forum'], true);
 		$tags = ParseThreadTags($thread['title']);
+		$tdata['description'] = $thread['description'];
 		$urlname = $ispublic ? $tags[0] : '';
 
 		$threadlink = actionLinkTag($tags[0], 'thread', $thread['id'], '', $urlname);

@@ -149,14 +149,14 @@ YOU WILL NOT RECEIVE HELP IF YOU HAVEN'T READ THE INSTRUCTIONS WHEN INSTALLING Y
  
 1) Make PMs like threads
 2) When msgread=1 in the database, show "Conversation read by:'.$readUser.';"
-3) Fix proxy protection, use SFS' tor JSON check.
+3) Fix proxy protection, use SFS' tor JSON check. (DONE)
 4) Finish the name search, AJAX file
 5) Use an AJAX name search request to suggest usernames in sendprivate
 6) Port quite a lot of old ABXD plugins
 7) Fix the Post +1 plugin, aka add the list plus ones page
 8) Fix rewritten links
 9) Implement a warning system
-10) Make a discord plugin, where you enter your discord link and it embeds it in an iframe
+10) Make a discord plugin, where you enter your discord link and it embeds it in an iframe (DONE)
 11) Make it easier to add forum moderators, like on ABXD
 12) Add a few different layouts and the ability to choose between them <ul>
 <li>Acmlmboard</li>
@@ -174,14 +174,14 @@ YOU WILL NOT RECEIVE HELP IF YOU HAVEN'T READ THE INSTRUCTIONS WHEN INSTALLING Y
 <li>An account can only be registered after 1 minute of another account being registered (optional, choose if you want it or not)</li><li>Registration word key, lock the site down like Cucco.de unless you're signed in. You would also need the key to register</li></ul>
 16) Finish the Blargboard todo list at Github
 17) Allow BBCode in the PoRA (DONE)
-18) Allow/disable PoRA setting, like on ABXD
+18) Allow/disable PoRA setting, like on ABXD (kind of)
 21) New layout (DONE)
 
 Optional stuff:
 1) Port the Acmlmboard RPG system
 2) Choose which type of post syndrome you want to use like Vizzed or Acmlmboard 2
 3) Allow webhooks to be used
-4) Make the IRC report plugin easy to use
+4) Make the IRC report plugin easy to use (nearly)
 
 -------------------------------------------------------------------------------
 

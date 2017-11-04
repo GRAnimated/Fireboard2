@@ -20,11 +20,9 @@
 								{if $poratext}{$poratext}{/if}
 							</td>
 						</tr>
+						</tr>
 					</table>
 				</td>
-                </tr>
-                </table>
-            </td>
 			{/if}
         </tr>
 			 <tr class="header1">

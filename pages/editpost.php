@@ -64,9 +64,6 @@ if((int)$_GET['delete'] == 1)
 {
 	if ($_GET['key'] != $loguser['token']) Kill(__("No."));
 	
-	if ($isFirstPost)
-		Kill(__("You may not delete a thread's first post."));
-	
 	if(!HasPermission('mod.deleteposts', $fid))
 	{
 		if ($post['user'] != $loguserid || !HasPermission('user.deleteownposts'))

@@ -1,0 +1,6 @@
+wiki: ['GET', '/wiki', 'wiki']
+wikiPage: ['GET', '/wiki/[**:page]?/?', 'wiki']
+wikichanges: ['GET', '/wikichanges', 'wikichanges']
+Wikiedit: ['GET|POST', '/wikiedit', 'wikiedit']
+WikieditPage: ['GET|POST', '/wikiedit/[**:page]', 'wikiedit']
+wikidiff: ['GET', '/wikidiff/[**:page]', 'wikidiff']

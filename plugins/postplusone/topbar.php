@@ -7,7 +7,7 @@ if($post['id'] && $post['id'] != '_')
 	$plusOne = "";
 	$show = $post['postplusones'];
 	
-	$plusOne .= "<span class=\"plusone\">";
+	$plusOne .= "<span class=\"postplusone\">";
 
 	if($post['u_id'] != $loguserid && $loguserid != 0)
 	{
@@ -21,6 +21,6 @@ if($post['id'] && $post['id'] != '_')
 	$plusOne .= "</span>";
 
 	if ($show)
-		$links->add(new PipeMenuHtmlEntry($plusOne));
+		$extraLinks[] = $plusOne;
 }
 

@@ -10,10 +10,11 @@ function OnlineUsers($forum = 0, $update = true)
 	if ($update)
 	{
 		if ($loguserid)
-			if($user['hideonline']) 
+			/*if($user['hideonline']) 
 			{
 			    Query("UPDATE {users} SET lastforum={0} WHERE id={1}", $forum, $loguserid);
-			}
+			}*/
+			Query("UPDATE {users} SET lastforum={0} WHERE id={1}", $forum, $loguserid);
 		else
 			Query("UPDATE {guests} SET lastforum={0} WHERE ip={1}", $forum, $_SERVER['REMOTE_ADDR']);
 	}
