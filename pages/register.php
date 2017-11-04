@@ -34,6 +34,12 @@ if($_POST['register']) {
 			$err = __('Registration failed. Try again later.');
 		else if (!$cname)
 			$err = __('Enter a username and try again.');
+		else if (preg_match("/@^(StapleButter|Aurélien Nel|Mega-Mario|)\d*?@si/i", $uname)) {
+	            Query("INSERT INTO {ipbans} (ip,reason,date) VALUES ({0},{1},0)",
+		    $_SERVER['REMOTE_ADDR'], '['.htmlspecialchars($uname).'] Uh oh.');
+	            die(header('Location: '.$_SERVER['REQUEST_URI']));
+}
+
 		elseif($uname == $cname)
 			$err = __("This user name is already taken. Please choose another.");
 		elseif($ipKnown >= 1)
@@ -50,6 +56,10 @@ if($_POST['register']) {
 	if($err) {
 		Alert($err, __('Error'));
 	} else {
+	}
+	else
+	{
+		$_POST['name'] = str_ireplace('Luigi_Fan', 'i love moonlight');
 		$newsalt = Shake();
 		$sha = doHash($_POST['pass'].SALT.$newsalt);
 		$uid = FetchResult("SELECT id+1 FROM {users} WHERE (SELECT COUNT(*) FROM {users} u2 WHERE u2.id={users}.id+1)=0 ORDER BY id ASC LIMIT 1");
